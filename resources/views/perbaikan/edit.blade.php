@@ -48,7 +48,7 @@
                                 value="{{ old('laporan_perbaikan_ids', $perbaikan->laporanKerusakan->kode_laporan || $perbaikan->laporanKerusakan->mesin->nama_mesin || $perbaikan->laporanKerusakan->created_at) }}"
                                 readonly required>
                             <input type="hidden" name="laporan_perbaikan_id" class="form-control"
-                                value="{{ old('laporan_perbaikan_id', $perawatan->laporan_perbaikan_id) }}" readonly
+                                value="{{ old('laporan_perbaikan_id', $perbaikan->laporan_perbaikan_id) }}" readonly
                                 required>
                         @endif
 
@@ -112,14 +112,14 @@
                             <select name="prioritas" id="prioritas" class="form-control" required>
                                 @foreach (['Low', 'Medium', 'High', 'Critical'] as $priority)
                                     <option value="{{ $priority }}"
-                                        {{ $perawatan->prioritas == $priority ? 'selected' : '' }}>
+                                        {{ $perbaikan->prioritas == $priority ? 'selected' : '' }}>
                                         {{ $priority }}</option>
                                 @endforeach
                             </select>
                         @endif
                         @if (Auth::guard('user')->user()->role == 'mekanik')
                             <input type="text" name="prioritas" class="form-control"
-                                value="{{ old('prioritas', $perawatan->prioritas) }}" readonly required>
+                                value="{{ old('prioritas', $perbaikan->prioritas) }}" readonly required>
                         @endif
                         @error('prioritas')
                             <ul class="parsley-errors-list filled">
@@ -170,9 +170,10 @@
                     <label class="col-form-label col-md-3 label-align">Status</label>
                     <div class="col-md-6">
                         <select name="status" id="status" class="form-control" required>
-                            <option value="Menunggu" {{ $perbaikan->status == 'Menunggu' ? 'selected' : '' }}>Menunggu
+                            <option value="Dijadwalkan" {{ $perbaikan->status == 'Dijadwalkan' ? 'selected' : '' }}>Dijadwalkan
                             </option>
-                            <option value="Proses" {{ $perbaikan->status == 'Proses' ? 'selected' : '' }}>Proses</option>
+                            <option value="Dalam Proses" {{ $perbaikan->status == 'Dalam Proses' ? 'selected' : '' }}>Dalam Proses</option>
+                            <option value="Tertunda" {{ $perbaikan->status == 'Tertunda' ? 'selected' : '' }}>Tertunda</option>
                             <option value="Selesai" {{ $perbaikan->status == 'Selesai' ? 'selected' : '' }}>Selesai
                             </option>
                         </select>
